@@ -6,7 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-borsh = { version = "0.10.3" }
+# borsh = { version = "0.10.3" }
+borsh = { path = "../borsh-rs/borsh" }
+borsh-derive = { path = "../borsh-rs/borsh-derive" }
+borsh-derive-internal = { path = "../borsh-rs/borsh-derive-internal" }
 
 [dev-dependencies]
 insta = { version = "1.31.0", features = ["yaml"] }

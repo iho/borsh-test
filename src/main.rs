@@ -1,5 +1,4 @@
-use borsh::{BorshDeserialize, BorshSerialize};
-
+use borsh_derive::{BorshDeserialize, BorshSerialize};
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 // #[use_discriminant = false]
 enum UnitEnum {
@@ -25,8 +24,8 @@ struct B {
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
-// #[use_discriminant = false]
 #[repr(u8)]
+#[borsh(use_discriminant = false)]
 enum TupleEnum {
     A,
     B,
@@ -35,8 +34,8 @@ enum TupleEnum {
 }
 
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
-// #[use_discriminant = false]
 #[repr(u8)]
+#[borsh(use_discriminant = false)]
 enum StructEnum {
     A,
     Struct { a: u8, b: u8, c: u8, d: u8 },
@@ -52,6 +51,7 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use borsh::{from_slice, BorshSerialize};
     #[test]
     fn test_unit_enum() {
         let values = vec![UnitEnum::A, UnitEnum::B, UnitEnum::C];
@@ -59,7 +59,7 @@ mod tests {
         for value in values.iter() {
             let encoded = value.try_to_vec().unwrap();
             println!("encoded: {:?}", encoded);
-            let decoded = UnitEnum::try_from_slice(&encoded).unwrap();
+            let decoded = from_slice::<UnitEnum>(&encoded).unwrap();
             insta::assert_debug_snapshot!(decoded);
             insta::assert_debug_snapshot!(encoded);
         }
@@ -88,7 +88,7 @@ mod tests {
         for value in values.iter() {
             let encoded = value.try_to_vec().unwrap();
             println!("encoded: {:?}", encoded);
-            let decoded = TupleEnum::try_from_slice(&encoded).unwrap();
+            let decoded = from_slice::<TupleEnum>(&encoded).unwrap();
             insta::assert_debug_snapshot!(decoded);
             insta::assert_debug_snapshot!(encoded);
         }
@@ -108,7 +108,7 @@ mod tests {
         for value in values.iter() {
             let encoded = value.try_to_vec().unwrap();
             println!("encoded: {:?}", encoded);
-            let decoded = StructEnum::try_from_slice(&encoded).unwrap();
+            let decoded = from_slice::<StructEnum>(&encoded).unwrap();
             insta::assert_debug_snapshot!(decoded);
             insta::assert_debug_snapshot!(encoded);
         }
