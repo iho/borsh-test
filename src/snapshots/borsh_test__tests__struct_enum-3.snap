@@ -1,0 +1,10 @@
+---
+source: src/main.rs
+expression: decoded
+---
+Struct {
+    a: 1,
+    b: 2,
+    c: 3,
+    d: 4,
+}

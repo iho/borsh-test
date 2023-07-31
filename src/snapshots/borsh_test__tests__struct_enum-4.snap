@@ -1,0 +1,11 @@
+---
+source: src/main.rs
+expression: encoded
+---
+[
+    1,
+    1,
+    2,
+    3,
+    4,
+]
